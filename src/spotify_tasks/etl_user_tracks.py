@@ -43,37 +43,21 @@ def get_playlist_tracks(username, playlist_id):
 def get_track_features(id):
     metadata = sp.track(id)
     features = sp.audio_features(id)
-    name = metadata['name']
-    album = metadata['album']['name']
-    artist = metadata['album']['artists'][0]['name']
-    release_date = metadata['album']['release_date']
-    length = metadata['duration_ms']
-    popularity = metadata['popularity']
-    acousticness = features[0]['acousticness']
-    danceability = features[0]['danceability']
-    energy = features[0]['energy']
-    instrumentalness = features[0]['instrumentalness']
-    liveness = features[0]['liveness']
-    loudness = features[0]['loudness']
-    speechiness = features[0]['speechiness']
-    tempo = features[0]['tempo']
-    time_signature = features[0]['time_signature']
     track = {
-        "name": name,
-        "album": album,
-        "artist": artist,
-        "release_date": release_date,
-        "length": length,
-        "popularity": popularity,
-        "danceability": danceability,
-        "acousticness": acousticness,
-        "energy": energy,
-        "instrumentalness": instrumentalness, 
-        "liveness": liveness, 
-        "loudness": loudness, 
-        "speechiness": speechiness, 
-        "tempo": tempo, 
-        "time_signature": time_signature
+        "name": metadata['name'],
+        "album": metadata['album']['name'],
+        "artist": metadata['album']['artists'][0]['name'],
+        "release_date": metadata['album']['release_date'],
+        "length": metadata['duration_ms'],
+        "popularity": metadata['popularity'],
+        "danceability": features[0]['danceability'],
+        "acousticness": features[0]['acousticness'],
+        "energy": features[0]['energy'],
+        "instrumentalness": features[0]['instrumentalness'], 
+        "liveness": features[0]['liveness'], 
+        "loudness": features[0]['loudness'], 
+        "speechiness": features[0]['speechiness'], 
+        "tempo": features[0]['tempo']
     }
     return(track)
 
@@ -83,7 +67,7 @@ def get_user_track_data(username):
     user_playlist_uris = get_playlists(username = username)
     df_out = pd.DataFrame()
     for playlist_uri in list(user_playlist_uris.keys()):
-        track_uris = get_playlist_tracks(username = username, playlist_id = 'spotify:playlist:3XMV8tlCUjSsDIyGixXENN')
+        track_uris = get_playlist_tracks(username = username, playlist_id = playlist_uri)
         for track_uri in track_uris:
             track_dict = get_track_features(track_uri)
             out_dict = {
