@@ -51,11 +51,21 @@ def get_tracks_alt(artist_name, album_name):
 
 
 # Get features of each track and return album as a dataframe object
-def get_track_data(track_uri):
-    pass
-
-
-# Example usage
-artist_name = "Brian Green"
-album_name = "Music For Home"
-tracks = get_tracks(artist_name, album_name)
+def get_album_data(artist_name, album_name):
+    df_out = pd.DataFrame()
+    album_tracks = get_tracks(artist_name = artist_name, album_name = album_name)
+    if len(album_tracks) == 0:
+        album_tracks = get_tracks_alt(artist_name = artist_name, album_name = album_name)
+    else:
+        pass
+    for track_uri in album_tracks.keys():
+        track_detail = get_track_features(track_uri)
+        out_dict = {
+                "track_uri": [track_uri]
+            }
+        for detail in track_detail.keys():
+            out_dict[detail] = [track_detail[detail]]
+        df = pd.DataFrame(out_dict)
+        df_out = pd.concat([df_out, df], axis = 0)
+    df_out = df_out.reset_index(drop = True)
+    return(df_out)
