@@ -3,9 +3,10 @@ import os
 from pathlib import Path
 
 
-# Speicify path defaults
+# Specify path defaults
 APP_PATH = Path(os.environ["PYTHONPATH"])
 OUTPUT_PATH = APP_PATH / "output/"
+MODEL_PATH = APP_PATH / "models/"
 
 
 # Email
