@@ -33,3 +33,19 @@ def run_end_to_end_pipeline():
         "recommended_playlist": "Recommended Playlist"
     })
     return(df_out_final)
+
+
+# Front-end program
+def frontend_pipeline():
+    df = run_end_to_end_pipeline()
+    df_new_albums = df[df["Timestamp"] == max(df["Timestamp"])].reset_index(drop = True)
+    if len(df_new_albums) > 0:
+        print("Hey there! Here's some new albums you might like to check out...")
+        for i in range(len(df_new_albums)):
+            print("Artist: ", df_new_albums["Artist"][i])
+            print("Album: ", df_new_albums["Album"][i])
+            print("Genre: ", df_new_albums["Genre"][i])
+            print("Release Date: ", df_new_albums["Date"][i])
+            print("Best Playlist for Songs on this Album: ", df_new_albums["Recommended Playlist"][i])
+    else:
+        print("No New Albums Unforrrrrch :/")
