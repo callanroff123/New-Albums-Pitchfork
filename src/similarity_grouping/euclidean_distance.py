@@ -128,9 +128,9 @@ def album_to_playlist_recommender(remove_weird_albums = True):
 
 
 # Runs the full similarity pipeline
-def similarity_pipeline():
+def similarity_pipeline(remove_weird_albums = True):
     grouped_playlist_df = fetch_and_group_playlist_data()
     fit_and_store_scaler(grouped_playlist_df = grouped_playlist_df)
-    df_refined = album_to_playlist_recommender(remove_weird_albums = True)
+    df_refined = album_to_playlist_recommender(remove_weird_albums = remove_weird_albums)
     return(df_refined)
 

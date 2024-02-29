@@ -55,7 +55,7 @@ def get_album_data(artist_name, album_name):
     df_out = pd.DataFrame()
     album_tracks = get_tracks(artist_name = artist_name, album_name = album_name)
     if len(album_tracks) == 0:
-        album_tracks = get_tracks_alt(artist_name = artist_name, album_name = album_name)
+        return(df_out)
     else:
         pass
     for track_uri in album_tracks.keys():
