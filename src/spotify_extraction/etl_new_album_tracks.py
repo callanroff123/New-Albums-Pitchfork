@@ -2,7 +2,7 @@ import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials
 import pandas as pd
 import numpy as np
-from src.spotify_tasks.etl_user_tracks import get_track_features
+from src.spotify_extraction.etl_user_tracks import get_track_features
 
 
 # Grant access to API

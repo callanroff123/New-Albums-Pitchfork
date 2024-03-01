@@ -16,3 +16,10 @@ PORT = 465
 
 # Spotify
 USER = "12153998341"
+
+
+# Phone numbers for SMS alerts
+TWILIO_PHONE_NUMBER = ''
+RECIPIENT_PHONE_NUMBER = ''
+TWILIO_ACCOUNT_SID = os.environ.get('TWILIO_ACCOUNT_SID')
+TWILIO_AUTH_TOKEN = os.environ.get('TWILIO_AUTH_TOKEN')

@@ -8,8 +8,8 @@ from datetime import datetime
 import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials
 from src.album_extraction.web_scraping import web_scraping_pipeline
-from src.spotify_tasks.etl_user_tracks import get_user_track_data
-from src.spotify_tasks.etl_new_album_tracks import get_album_data
+from src.spotify_extraction.etl_user_tracks import get_user_track_data
+from src.spotify_extraction.etl_new_album_tracks import get_album_data
 from src.config import OUTPUT_PATH, USER
 
 
