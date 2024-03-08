@@ -4,7 +4,7 @@
 
 
 # Import libraries/modules
-from src.post_extraction_tasks.export_data import export_reviews, export_track_features
+from src.post_extraction.export_data import export_reviews, export_track_features
 from src.similarity_grouping.euclidean_distance import similarity_pipeline, fetch_and_group_playlist_data, fit_and_store_scaler
 from src.config import OUTPUT_PATH
 import pandas as pd
@@ -42,10 +42,12 @@ def frontend_pipeline():
     if len(df_new_albums) > 0:
         print("Hey there! Here's some new albums you might like to check out...")
         for i in range(len(df_new_albums)):
+            print("---------------------------------------------------------------------------------")
             print("Artist: ", df_new_albums["Artist"][i])
             print("Album: ", df_new_albums["Album"][i])
             print("Genre: ", df_new_albums["Genre"][i])
             print("Release Date: ", df_new_albums["Date"][i])
             print("Best Playlist for Songs on this Album: ", df_new_albums["Recommended Playlist"][i])
+            print("---------------------------------------------------------------------------------")
     else:
         print("No New Albums Unforrrrrch :/")

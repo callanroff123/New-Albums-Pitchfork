@@ -5,7 +5,7 @@ import pandas as pd
 from datetime import datetime
 from datetime import timedelta
 from src.config import OUTPUT_PATH
-from src.SMS.twilio_base import send_text_message
+from src.sms.twilio_base import send_text_message
 
 
 # New albums track features seems to be playing up.
