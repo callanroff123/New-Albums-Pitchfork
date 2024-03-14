@@ -3,6 +3,16 @@
 ###################################
 
 
+# Allow relative importst6vb         
+import os
+import sys
+ENV = os.environ.get("VIRTUAL_ENV")
+ENV_SPLIT = ENV.split("/")
+PYTHONPATH = "/".join(i for i in ENV_SPLIT if i != "venv")
+os.environ["PYTHONPATH"] = PYTHONPATH
+sys.path.append(PYTHONPATH)
+
+
 # Import libraries/modules
 from src.post_extraction.export_data import export_reviews, export_track_features
 from src.similarity_grouping.euclidean_distance import similarity_pipeline, fetch_and_group_playlist_data, fit_and_store_scaler
