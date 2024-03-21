@@ -3,7 +3,7 @@
 ###################################
 
 
-# Allow relative importst6vb         
+# Allow relative importst        
 import os
 import sys
 ENV = os.environ.get("VIRTUAL_ENV")
@@ -16,6 +16,7 @@ sys.path.append(PYTHONPATH)
 # Import libraries/modules
 from src.post_extraction.export_data import export_reviews, export_track_features
 from src.similarity_grouping.euclidean_distance import similarity_pipeline, fetch_and_group_playlist_data, fit_and_store_scaler
+from src.sms.twilio_base import send_text_message
 from src.config import OUTPUT_PATH
 import pandas as pd
 
@@ -46,18 +47,25 @@ def run_end_to_end_pipeline():
 
 
 # Front-end program
-def frontend_pipeline():
+def frontend_pipeline(send_sms = True):
     df = run_end_to_end_pipeline()
     df_new_albums = df[df["Timestamp"] == max(df["Timestamp"])].reset_index(drop = True)
     if len(df_new_albums) > 0:
-        print("Hey there! Here's some new albums you might like to check out...")
+        msgg = "Hey there! Here's some new albums you might like to check out...\n--------------------\n"
         for i in range(len(df_new_albums)):
-            print("---------------------------------------------------------------------------------")
-            print("Artist: ", df_new_albums["Artist"][i])
-            print("Album: ", df_new_albums["Album"][i])
-            print("Genre: ", df_new_albums["Genre"][i])
-            print("Release Date: ", df_new_albums["Date"][i])
-            print("Best Playlist for Songs on this Album: ", df_new_albums["Recommended Playlist"][i])
-            print("---------------------------------------------------------------------------------")
+            artist = f"Artist: {df_new_albums['Artist'][i]}\n"
+            album = f"Album: {df_new_albums['Album'][i]}\n"
+            genre = f"Genre: {df_new_albums['Genre'][i]}\n"
+            release = f"Release Date: {df_new_albums['Date'][i]}\n"
+            playlist = f"Best Spotify User's Playlist for Songs on this Album: {df_new_albums['Recommended Playlist'][i]}\n"
+            eight_plus = f"8+ Album: {df_new_albums["8+ Album Flag"][i]}\n"
+            best_new = f"Best New Album: {df_new_albums["Best New Albums Flag"][i]}\n" 
+            lines = "--------------------\n"
+            msgg = msgg + lines + artist + album + genre + release + playlist + eight_plus + best_new + lines
+        print(msgg)
+        if send_sms == True:
+            send_text_message(msgg)
+        else:
+            pass
     else:
         print("No New Albums Unforrrrrch :/")

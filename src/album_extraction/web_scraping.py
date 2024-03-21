@@ -96,12 +96,24 @@ def get_albums(page = "8+"):
 # Scapes the top 24 most recent reviews.
 # Then determine if they fall into the 'best new albums' category
 def web_scraping_pipeline():
+    df_main = get_albums("main")
     df_8plus = get_albums("8+")
     df_best_albums = get_albums("best_new")
+    df_8plus["8+ Album Flag"] = 1
     df_best_albums["Best New Albums Flag"] = 1
     df = pd.merge(
-        left = df_8plus,
-        right = df_best_albums,
+        left = df_main,
+        right = pd.merge(
+            left = df_8plus,
+            right = df_best_albums,
+            on = [
+                "Artist",
+                "Album",
+                "Genre",
+                "Date"
+            ],
+            how = "left"
+        ),
         on = [
             "Artist",
             "Album",
@@ -110,6 +122,7 @@ def web_scraping_pipeline():
         ],
         how = "left"
     )
+    df["8+ Album Flag"] = df["8+ Album Flag"].fillna(0)
     df["Best New Albums Flag"] = df["Best New Albums Flag"].fillna(0)
     df["Timestamp"] = datetime.now()
     return(df)
